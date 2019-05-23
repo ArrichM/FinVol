@@ -61,7 +61,7 @@ fit_dcc_quick <- function(x = data, var_order = 10, uni_models = c(1,1,1), order
 
 
 #We define a function that will run a model selection on the desired data, evaluating a specified range of models.
-select_dcc <- function(data = data, var_order = 10, 
+select_dcc <- function(var_order = 10, 
                        uni_range = list(1:2,1:2,1:2), #which models should be tested? needs to have as many elements as data?
                        data_full = data, 
                        order_range = list(c(1,1),c(1,1),c(1,1)), #which orders should be tested? needs to have as many elements as data?
@@ -69,7 +69,7 @@ select_dcc <- function(data = data, var_order = 10,
   
   #fit the desired models
   evaluated <- apply(expand.grid(uni_range), 1, function(x) try(fit_dcc_quick(uni_models = x, full_out = full_out, 
-                                                                      data_full = data_full, orders = order_range, innovations = innovations)))
+                                                                      x = data_full, orders = order_range, innovations = innovations)))
   
   #choose the winner
   winner <- expand.grid(uni_range)[which(evaluated == min(evaluated)),]
