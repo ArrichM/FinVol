@@ -125,13 +125,13 @@ res_var <- vfit$xresiduals
 
 #testing the residuals shows that the model captures the autoregression well
 LjungBox(res_var)
-acf(res_var)
+
 autoplot(res_var) + facet_wrap( ~ series, nrow = 3, scale = "free")  +  theme(legend.position = "none")
 
 #we check for ARCH effects in the squared residuals:
 apply(res_var^2, 2, Box.test) #some significantautocorrelartion in the squares
 
-pacf(res_var^2) %>% autoplot 
+
 # Significant dependencies in the cross correlations / covariances-. This is the indication to fit a DSS 
 # model in order to use all information availble in the data when constructiong conditional variance estimates.
 
@@ -150,13 +150,14 @@ pacf(res_var^2) %>% autoplot
 # under a set of considered models. To this end, we use some functions that we stored in the resources.R file.
 
 # Run selection algorithm
-selected_model <- select_dcc(data = data, var_order = 10, 
+selected_model <- select_dcc(var_order = 10, 
            uni_range = list(1:2,1:2,1:2), #which models should be tested? needs to have as many elements as data?
-           data_full = data, 
            order_range = list(c(1,1),c(1,1),c(1,1)), #which orders should be tested? Will be used for estimation, not object of optimasation
            innovations = "norm", cluster = F, full_out = F)
 
 # We use the selected model choice as direct input into the fitting function we use to fit our dcc. 
+
+# Do not worry about the errors, they are normal.
 fit <- fit_dcc_quick(uni_models = selected_model$Chosen, full_out = T)
 
 
@@ -179,7 +180,7 @@ res <- fit@mfit$stdresid
 autoplot(ts(res)) + facet_wrap( ~ series, nrow = 3, scale = "free")  +  theme(legend.position = "none")
 
 # A QQ Plot revauls a pretty good fitting. Normal residuals might have been the right choice
-qqnorm(res)
+qqline(res, distribution =qnorm)
 
 # We jointly test the residuals for autocorrelation
 LjungBox(res, squared.residuals = F) # no autocorrealtion in the first moment
