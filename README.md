@@ -24,7 +24,9 @@ Please read this document before running the code.
 - ggplot2
 
 
-2. The Code is split into two parts. "main.R" conducts all necessary computations and is the primary object of interest. "resources.R" holds a number of functions that will be called during the evaluation of "main.R". Thus, please do not separate the two files. The necessary data is stored in the "Data" folder. NOTE: please do not separate these files. Otherwise, the code won't run properly.
+2. Simply pull this directory and run "main.R" directly without any adjustments. The Code is split into two parts. "main.R" conducts all necessary computations and is the primary object of interest. "resources.R" holds a number of functions that will be called during the evaluation of "main.R". Thus, please do not separate the two files. The necessary data is stored in the "Data" folder. 
+
+NOTE: please do not separate these files. Otherwise, the code won't run properly.
 
 
 
